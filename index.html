@@ -335,7 +335,29 @@
   .closing{padding-bottom:clamp(120px,26vw,160px);}
   .closing .note{margin-bottom:0;}
   .closing-sign{font-family:'Parisienne',cursive;font-size:1.6rem;color:var(--navy);margin-top:22px;}
-  #ringDock{height:70px;} /* breathing room where rings settle */
+  #ringDock{height:96px;} /* rings settle here, below the signature */
+
+
+  /* auto-play button */
+  .play-btn{
+    position:fixed;right:18px;bottom:18px;z-index:40;
+    width:58px;height:58px;border-radius:50%;
+    border:1px solid rgba(126,155,184,.55);
+    background:linear-gradient(160deg,#FDFEFF,#E2ECF6);
+    box-shadow:0 8px 22px rgba(43,49,73,.2);
+    color:var(--navy);font-size:1.1rem;line-height:1;
+    cursor:pointer;display:none;align-items:center;justify-content:center;
+    transition:transform .2s ease, opacity .4s ease;
+  }
+  .play-btn.show{display:flex;}
+  .play-btn:active{transform:scale(.9);}
+  .play-hint{
+    position:fixed;right:84px;bottom:36px;z-index:40;
+    font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--rose-deep);opacity:0;pointer-events:none;
+    transition:opacity .5s ease;
+  }
+  .play-hint.show{opacity:1;}
 
   ::selection{background:var(--rose-pale);}
 
@@ -349,6 +371,10 @@
 
 <!-- ambient petals + sparkles -->
 <div id="ambient" aria-hidden="true"></div>
+
+<button class="play-btn" id="playBtn" aria-label="Watch the invitation like a video">&#9654;</button>
+<div class="play-hint" id="playHint">Watch</div>
+
 
 <!-- travelling rings -->
 <svg id="ringL" width="72" height="72" viewBox="0 0 72 72" aria-hidden="true">
@@ -398,7 +424,7 @@
     <section>
       <p class="eyebrow">With the blessings of</p>
       <h3 class="parents-names">Mr. Thomas Antony Pereira<br>&amp;<br>Mrs. Benadicta Thomas</h3>
-      <p class="addr">1st Main 1st Cross, Balaji Nagar,<br>SG Palya, Bangalore,<br>Karnataka &ndash; 560029</p>
+      <p class="addr">Sarjapur Road,<br>Bengaluru, Karnataka</p>
       <p class="with-love">joyfully invite you to the wedding of their son</p>
     </section>
 
@@ -414,7 +440,7 @@
     <section>
       <p class="eyebrow">Beloved daughter of</p>
       <h3 class="parents-names">Mr. Priya Ranjan Das<br>&amp;<br>Mrs. Madhusmita Das</h3>
-      <p class="addr">Srusti Elite, House Number C-201,<br>Sunderpada,<br>Bhubaneswar &ndash; 751002</p>
+      <p class="addr">Nayakothi Compound,<br>Khordha, Odisha</p>
     </section>
 
     <div class="divider" aria-hidden="true">&#10047;</div>
@@ -443,8 +469,8 @@
     <!-- ceremony venue -->
     <section>
       <p class="eyebrow">The Ceremony</p>
-      <h3 class="venue-name">Calvary&rsquo;s Grace Bible Church</h3>
-      <p class="addr">No. 10, 2nd Cross, Lakshamma Layout,<br>Banaswadi, Bengaluru &ndash; 560043</p>
+      <h3 class="venue-name">Gethsemane Sung Ji Church</h3>
+      <p class="addr">#126/2 Chikka Nanjunda Reddy Layout,<br>Kalyan Nagar, Bangalore &ndash; 560043</p>
     </section>
 
     <div class="divider" aria-hidden="true">&#10047;</div>
@@ -464,8 +490,8 @@
       <p class="eyebrow">Find your way</p>
       <div class="qr-grid">
         <div class="qr-cell">
-          <a href="https://www.google.com/maps/search/?api=1&amp;query=Calvary%27s+Grace+Bible+Church%2C+No.+10%2C+2nd+Cross%2C+Lakshamma+Layout%2C+Banaswadi%2C+Bengaluru+560043" target="_blank" rel="noopener">
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAjoAAAI6CAIAAAChKnWXAAAPnklEQVR4nO3cO3IkuRVAUVHB5Yw5G9FKtRGZWgwdBuXSUGA6iMY83Kxz/MrKyk/dgIH39vX58Q8AuNs/p08AAP6aXAEQIFcABMgVAAFyBUCAXAEQIFcABMgVAAFyBUCAXAEQIFcABMgVAAFyBUCAXAEQIFcABMgVAAFyBUCAXAEQIFcABLzvfPiPP//1u87jEv/9z78PHXl9rdbfe+6za+eOfO5777ySa1Pfu3buXSjaeXLOfW/RzrWyugIgQK4ACJArAALkCoAAuQIgQK4ACJArAALkCoAAuQIgYGuqxdqdu+LvnBEwNalh7c4ZEDt2rsbUXZh6cu6c4jF1F9amvvfV/mOtrgAIkCsAAuQKgAC5AiBArgAIkCsAAuQKgAC5AiBArgAIODjVYm1qz/yOO8/ZdInvdn7vuSOfO6s75xrceSV3Zk8U37I7/692WF0BECBXAATIFQABcgVAgFwBECBXAATIFQABcgVAgFwBEDA21eLV7OwDv3N3+qtNeTh3rXYmJpz77I5z57yjeAf5zuoKgAC5AiBArgAIkCsAAuQKgAC5AiBArgAIkCsAAuQKgABTLR5uaoLA2s5ZTZ3zOVPzQXaOfOdskTuvpLkVv4vVFQABcgVAgFwBECBXAATIFQABcgVAgFwBECBXAATIFQABY1MtXm2n986e+Z1rtTObYGpiwo6pa7Vj6h5NfXZnIsbUPSp63tWwugIgQK4ACJArAALkCoAAuQIgQK4ACJArAALkCoAAuQIg4OBUi3OTC+50bjf+nTv57/y9xckU59x5nYv36NwEkHNzWJ7H6gqAALkCIECuAAiQKwAC5AqAALkCIECuAAiQKwAC5AqAgLevz4/pc8iY2hW/NjUxYe15++2fN23hztkTO+586u68VkVWVwAEyBUAAXIFQIBcARAgVwAEyBUAAXIFQIBcARAgVwAEbE21uHPKw46p/efnJghMXeepWQw77nwmdzzvWp2bxDH1Dvqf/HVWVwAEyBUAAXIFQIBcARAgVwAEyBUAAXIFQIBcARAgVwAEvO98+Nze5uIe8qnd6cXf+7w5HTuKz8bzrsa5zxYncew4d1ZWVwAEyBUAAXIFQIBcARAgVwAEyBUAAXIFQIBcARAgVwAEvH19fox88Z3zI6YmU+y4c+/6naamaUzdox3Pm+NQvIOv9nvXrK4ACJArAALkCoAAuQIgQK4ACJArAALkCoAAuQIgQK4ACHifPoG/285u7Tt3ek+5c0LEzpGnpgC82veec27SytQMlztnfOx87w6rKwAC5AqAALkCIECuAAiQKwAC5AqAALkCIECuAAiQKwAC3r4+P3784Tt3xU/tP187tzv9nHNndecch+IvWpt6ru6cAbF25x3cUfwnXLO6AiBArgAIkCsAAuQKgAC5AiBArgAIkCsAAuQKgAC5AiBga6rFjp399s+bTXDue++cL3DurF7tLpz73jsnNewovgvF+3vu/9nqCoAAuQIgQK4ACJArAALkCoAAuQIgQK4ACJArAALkCoCAg1MtinvIpxR3mBfnktx55B13TuK48x2885ksmnrara4ACJArAALkCoAAuQIgQK4ACJArAALkCoAAuQIgQK4ACNiaanFut/adMwJebQbE2p1X45w7J49MXcmpsyr+orWpaSl3TmlZs7oCIECuAAiQKwAC5AqAALkCIECuAAiQKwAC5AqAALkCIODgVIup2QTF3enPm3mxVvxFd85T2DnyOcV5N8V/hh1T7+AOqysAAuQKgAC5AiBArgAIkCsAAuQKgAC5AiBArgAIkCsAAramWjzP8/afn/veteKVnHLn771zrsGOqWdyahLHWnE+iNUVAAFyBUCAXAEQIFcABMgVAAFyBUCAXAEQIFcABMgVAAFbUy3O7cZfu3PawtSkhrWp6QPP+71TEwSmnthz7pzisePOf4binI41qysAAuQKgAC5AiBArgAIkCsAAuQKgAC5AiBArgAIkCsAAg5OtTi3k3/H1H7stXM7zIszEe58ru6cl7FWnGtw57tfnGnyvCNbXQEQIFcABMgVAAFyBUCAXAEQIFcABMgVAAFyBUCAXAEQcHCqxY5zu/FfzZ2zRc6ZmlpybnrI2vN+79Rnp9w5a+PO2SJWVwAEyBUAAXIFQIBcARAgVwAEyBUAAXIFQIBcARAgVwAEHJxqMbXffkpxh/mUc5MLdtz5PE/d/Vebh3LO8/4Jp94UqysAAuQKgAC5AiBArgAIkCsAAuQKgAC5AiBArgAIkCsAAt6nT+AnXm3P/Ln5AlPTNO48q7Vz37tzf6dmfJxz5y/aeSannpxzb9nUnA6rKwAC5AqAALkCIECuAAiQKwAC5AqAALkCIECuAAiQKwAC3r4+P3784eftmt5x59SDHcXZE1MTQKbc+Q7eeffvfJ7vnFlz53tkdQVAgFwBECBXAATIFQABcgVAgFwBECBXAATIFQABcgVAwNZUi7WdfeB3TkxYe96O+uLUg+KTs6M4O+bVJkTwnakWADycXAEQIFcABMgVAAFyBUCAXAEQIFcABMgVAAFyBUDAwakWa3fubF87t++9uGf+3DnfeeSp5+pOd85hOaf4i4rv4JrVFQABcgVAgFwBECBXAATIFQABcgVAgFwBECBXAATIFQAB79Mn8Hebmlyw43kTBHaOfOcEkKnnqjgBZOqz55y7C+d+79Rnd1hdARAgVwAEyBUAAXIFQIBcARAgVwAEyBUAAXIFQIBcARAwNtViZ1/0ub36O87t1T9nand6cRLHnd97burBnfNBzn32Tnf+X00d2eoKgAC5AiBArgAIkCsAAuQKgAC5AiBArgAIkCsAAuQKgIC3r8+PH3/4eXvId0zNrTj3va82iePO5/l5z9XO966dmyxTnA9yztSVtLoCIECuAAiQKwAC5AqAALkCIECuAAiQKwAC5AqAALkCIGBrqsXa1A7zc59dmzryjuJsgnOmzvl5z+SrTZcoPjl3nvOa1RUAAXIFQIBcARAgVwAEyBUAAXIFQIBcARAgVwAEyBUAAe/nDn3nLIapnd7n5gtMOXd/d753ap7C1JOzc+S1qYkJa1PfW3zaz5m6GlZXAATIFQABcgVAgFwBECBXAATIFQABcgVAgFwBECBXAAS8fX1+/PjD5/bM73xvcQrAne6cS7I2dRemZkDc+Yt2jryjOLNm6jrfeVZrVlcABMgVAAFyBUCAXAEQIFcABMgVAAFyBUCAXAEQIFcABGxNtVib2jW948594Gt3TvHYcW42wZ3fu/a8uRV3PnXn3Plvtnbn/5XVFQABcgVAgFwBECBXAATIFQABcgVAgFwBECBXAATIFQAB79Mn8P/dOUHg3MwLvpuaiXDn/T13Nc79ouLciuL0kLVz93fqF1ldARAgVwAEyBUAAXIFQIBcARAgVwAEyBUAAXIFQIBcARDw9vX58eMPn9u9vDa1p3ptahbD1JHPTT0ozjWYmgGxdudZnXPnm7LjeW/ZDqsrAALkCoAAuQIgQK4ACJArAALkCoAAuQIgQK4ACJArAAK2plqsPW9PdXHv+o5Xmx6y485JHOemlkxNAFm7cy5JcdbG1LybNasrAALkCoAAuQIgQK4ACJArAALkCoAAuQIgQK4ACJArAAIOTrXYcW7XtD3kv+55c0nWzET4XUfeMfUuvNqRi/9XVlcABMgVAAFyBUCAXAEQIFcABMgVAAFyBUCAXAEQIFcABBycanHnrvi1c+dc3BW/Y2rWxo7ifIG1c9MH7ny7X+2sivfXVAsAHk6uAAiQKwAC5AqAALkCIECuAAiQKwAC5AqAALkCIGBrqsXOzufiLIZzv3dqN/6d7pwucecdLM4mODel5dz3Tn12bepKTrG6AiBArgAIkCsAAuQKgAC5AiBArgAIkCsAAuQKgAC5AiBga6rF2p37/HfcuTt9atbGnTv57zT1TO6Yur9Fd76Da8U7aHUFQIBcARAgVwAEyBUAAXIFQIBcARAgVwAEyBUAAXIFQMDWVIs790VP7TB/nuKeeVMAvnvebJGpOSxrU/8bd05LOXdWVlcABMgVAAFyBUCAXAEQIFcABMgVAAFyBUCAXAEQIFcABGxNtdhRnBGwVpzjMLWTv3hWO6auxo47r8Y5U3Mc7nw2pt7QNasrAALkCoAAuQIgQK4ACJArAALkCoAAuQIgQK4ACJArAALedz48NX2gaGof+DnnZhPcuaP+3O+988h3Tkw499k737Kic1fS6gqAALkCIECuAAiQKwAC5AqAALkCIECuAAiQKwAC5AqAgLevz49Dh361OQ5rZhP8riOfMzWlpfhsnDvn4vfeeRfOPXVTrK4ACJArAALkCoAAuQIgQK4ACJArAALkCoAAuQIgQK4ACDg41WLH1BSAojunWqzdud/+zmfjeVfjzlkb5xSfqzvfUKsrAALkCoAAuQIgQK4ACJArAALkCoAAuQIgQK4ACJArAAIunWpxp+I+/yl3Th65cyf/1P0tXo2p56o4iWPqrM7dQasrAALkCoAAuQIgQK4ACJArAALkCoAAuQIgQK4ACJArAALedz5cnLawtt5xPTUF4Ny+97U75wusPe9anbvOO+d8bmLCnW/Z1H9d8bk69w5aXQEQIFcABMgVAAFyBUCAXAEQIFcABMgVAAFyBUCAXAEQsDXVYm1qvsDazu70qc+eU9zZbprG7zI1P2JtatbG897QtZ3rPPXkWF0BECBXAATIFQABcgVAgFwBECBXAATIFQABcgVAgFwBEHBwqsWa+QK/buoX7exdPzeb4M5pC+fsfO+dMxGmPrtmmsZ3U2/ZmtUVAAFyBUCAXAEQIFcABMgVAAFyBUCAXAEQIFcABMgVAAFjUy1ezbk5DjvO7dWfOvK5z55z5wSQOydEFJ/YHXfO+Fg795ZZXQEQIFcABMgVAAFyBUCAXAEQIFcABMgVAAFyBUCAXAEQYKrFFYp713eOPDVB4M6zunNOx9SEiOLMizvdOeNj50paXQEQIFcABMgVAAFyBUCAXAEQIFcABMgVAAFyBUCAXAEQMDbVorhL/NxO7+Ich6lpGjtndefEhLU7z2pqEkfxf2Pt3Fu2Vjyy1RUAAXIFQIBcARAgVwAEyBUAAXIFQIBcARAgVwAEyBUAAQenWpzbUT9lam7F1OSCtXO78e+cHjJ1B4vTB9ampqWce67OXcmpaSlrU0+O1RUAAXIFQIBcARAgVwAEyBUAAXIFQIBcARAgVwAEyBUAAW9fnx/T5wAAf8HqCoAAuQIgQK4ACJArAALkCoAAuQIgQK4ACJArAALkCoAAuQIgQK4ACJArAALkCoAAuQIgQK4ACJArAALkCoAAuQIgQK4ACPgfFrb9r/H6sn0AAAAASUVORK5CYII=" alt="QR code with directions to Calvary's Grace Bible Church">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Gethsemane+Sung+ji+Church%2C+%23126%2F2+Chikka+Nanjunda+Reddy+Layout%2C+Kalyan+Nagar%2C+Bangalore+560043" target="_blank" rel="noopener">
+            <img src="data:image/png;base64,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" alt="QR code with directions to Gethsemane Sung Ji Church">
             <div class="qr-lab">Church &#9962;</div>
           </a>
         </div>
@@ -482,7 +508,7 @@
     <!-- closing -->
     <section class="closing">
       <p class="note">Your presence, prayers, and blessings are the greatest gift as we step into this beautiful journey together. Please bless our union with your love.</p>
-      <p class="closing-sign">With love, Tobin &amp; Simran</p>
+      <p class="closing-sign">With Love Tania &amp; Abhilash</p>
       <div id="ringDock" aria-hidden="true"></div>
     </section>
 
@@ -541,6 +567,9 @@
     setTimeout(function(){
       document.body.classList.remove("locked");
       revealSections();
+      document.getElementById("playBtn").classList.add("show");
+      document.getElementById("playHint").classList.add("show");
+      setTimeout(function(){ document.getElementById("playHint").classList.remove("show"); }, 4000);
     }, 900);
     setTimeout(function(){ scene.style.display = "none"; }, 2200);
   });
@@ -568,14 +597,18 @@
   function lerp(a,b,t){ return a + (b-a)*t; }
   function easeInOut(t){ return t<0.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2; }
 
+  var ringDock = document.getElementById("ringDock");
   function positionRings(p){
     var w = window.innerWidth, h = window.innerHeight;
     var e = easeInOut(p);
     var size = 72;
-    /* start: corners; end: interlocked at ~62% viewport height, center */
+    /* start: corners; end: interlocked on the dock below the signature */
+    var dockRect = ringDock.getBoundingClientRect();
+    var dockY = dockRect.top + dockRect.height/2 - size/2;
+    var endY = Math.min(dockY, h*0.8); /* aim at dock once it enters view */
     var lx = lerp(12, w/2 - size + 22, e);
     var rx = lerp(w - size - 12, w/2 - 22, e);
-    var y  = lerp(14, h*0.62, e);
+    var y  = lerp(14, endY, e);
     var rot = e*180;
     ringL.style.transform = "translate3d(" + lx + "px," + y + "px,0) rotate(" + rot + "deg)";
     ringR.style.transform = "translate3d(" + rx + "px," + y + "px,0) rotate(" + (-rot) + "deg)";
@@ -702,6 +735,80 @@
     setTimeout(tick, 1000 - (Date.now() % 1000));
   }
   tick();
+
+  /* ============ auto-play: watch like a video ============ */
+  var playBtn = document.getElementById("playBtn");
+  var playHint = document.getElementById("playHint");
+  var auto = false, autoRAF = null, lastT = 0, scratchShown = false;
+  var AUTO_SPEED = 72; /* px per second */
+
+  function stopAuto(){
+    auto = false;
+    if(autoRAF){ cancelAnimationFrame(autoRAF); autoRAF = null; }
+    playBtn.innerHTML = "&#9654;";
+  }
+  function atBottom(){
+    return window.scrollY >= document.documentElement.scrollHeight - window.innerHeight - 2;
+  }
+  function autoScratch(done){
+    var w = canvas.clientWidth, h = canvas.clientHeight, t0 = null, DUR = 1900, rows = 4;
+    last = null;
+    function step(ts){
+      if(!auto){ done(false); return; }
+      if(t0 === null) t0 = ts;
+      var k = Math.min(1, (ts - t0) / DUR);
+      var prog = k * rows;
+      var row = Math.min(rows - 1, Math.floor(prog));
+      var frac = prog - row;
+      var y = h * (0.17 + 0.22 * row);
+      var x = (row % 2 === 0 ? frac : 1 - frac) * w;
+      scratchTo({x:x, y:y});
+      if(k < 1){ requestAnimationFrame(step); }
+      else{
+        cleared = true;
+        canvas.classList.add("done");
+        tip.textContent = "See you there! \u2764";
+        last = null;
+        done(true);
+      }
+    }
+    requestAnimationFrame(step);
+  }
+  function autoLoop(ts){
+    if(!auto) return;
+    if(!lastT) lastT = ts;
+    var dt = Math.min(50, ts - lastT);
+    lastT = ts;
+    /* pause at the scratch card and reveal it for the viewer */
+    if(!scratchShown && !cleared){
+      var r = canvas.getBoundingClientRect();
+      if(r.top > 0 && r.top < window.innerHeight * 0.5){
+        scratchShown = true;
+        autoScratch(function(){
+          setTimeout(function(){
+            lastT = 0;
+            if(auto) autoRAF = requestAnimationFrame(autoLoop);
+          }, 2400); /* linger so the date + countdown can be read */
+        });
+        return;
+      }
+    }
+    window.scrollBy(0, AUTO_SPEED * dt / 1000);
+    if(atBottom()){ stopAuto(); return; }
+    autoRAF = requestAnimationFrame(autoLoop);
+  }
+  playBtn.addEventListener("click", function(){
+    playHint.classList.remove("show");
+    if(auto){ stopAuto(); return; }
+    auto = true; lastT = 0;
+    if(cleared) scratchShown = true;
+    playBtn.innerHTML = "&#10073;&#10073;";
+    autoRAF = requestAnimationFrame(autoLoop);
+  });
+  /* any manual interaction hands control back to the guest */
+  ["wheel","touchmove","keydown"].forEach(function(ev){
+    window.addEventListener(ev, function(){ if(auto) stopAuto(); }, {passive:true});
+  });
 })();
 </script>
 </body>
